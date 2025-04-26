@@ -1,6 +1,5 @@
-import { Navigate } from "react-router";
-import { Outlet } from "react-router";
-import useController from "./libs/useContoller";
+import { Navigate, Outlet } from 'react-router-dom';
+import useController from '@/components/wrapper/auth-guard-wrapper/libs/useContoller';
 
 const AuthGuardWrapper = () => {
   const { isAuthenticated } = useController();

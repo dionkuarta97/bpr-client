@@ -2,12 +2,9 @@ import { useAuthStore } from '@/store';
 
 const useController = () => {
   const { token } = useAuthStore();
+  const isLoggedIn = !!token;
 
-  const isAuthenticated = !!token;
-
-  return {
-    isAuthenticated,
-  };
+  return { isLoggedIn };
 };
 
 export default useController;
