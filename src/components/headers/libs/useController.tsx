@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaUser, FaBook, FaImages, FaNewspaper } from 'react-icons/fa';
+import { FaUser, FaBook, FaNewspaper } from 'react-icons/fa';
 
 const useController = () => {
   const pathname = useLocation();
@@ -49,20 +49,6 @@ const useController = () => {
           />
         ),
         isActive: pathname.pathname.startsWith('/publikasi'),
-      },
-      {
-        label: 'Gallery',
-        path: '/gallery',
-        icon: (
-          <FaImages
-            className={`${
-              pathname.pathname.startsWith('/gallery')
-                ? 'text-text-on-primary'
-                : 'text-text-secondary'
-            }`}
-          />
-        ),
-        isActive: pathname.pathname.startsWith('/gallery'),
       },
     ];
   }, [pathname.pathname]);

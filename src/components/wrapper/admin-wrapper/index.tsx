@@ -6,7 +6,7 @@ import useController from './libs/useController';
 const AdminWrapper = () => {
   const { handleLogout } = useController();
   return (
-    <div className="flex h-screen flex-col w-full">
+    <div className="flex min-h-screen flex-col w-full">
       <div
         className={`w-full px-20 py-8 flex flex-row justify-between items-center bg-white shadow-lg`}
       >
@@ -16,7 +16,7 @@ const AdminWrapper = () => {
         </Button>
       </div>
       <HeaderMenu />
-      <div className="flex-1 px-20 py-8 bg-background-default">
+      <div className="flex min-h-screen px-20 py-8 bg-background-default">
         <Outlet />
       </div>
     </div>

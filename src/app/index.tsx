@@ -1,9 +1,9 @@
-import { ThemeProvider } from "@mui/material";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Router from "@/routes";
-import theme from "@/theme";
-import { Toast } from "@/components/toast";
-const queryClient = new QueryClient();
+import { ThemeProvider } from '@mui/material';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Router from '@/routes';
+import theme from '@/theme';
+import { Toast } from '@/components/toast';
+export const queryClient = new QueryClient();
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,0 +1,98 @@
+import useGetProducts from '@/hooks/product/useGetProducts';
+import { Column, Row } from '@/interface/global';
+import { ProductResponse } from '@/interface/product/response';
+import { useMemo } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { FaEye, FaTrash } from 'react-icons/fa';
+const useController = () => {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  const page = params.get('page') || 1;
+  const limit = params.get('limit') || 10;
+  const tipe = params.get('tipe') || '';
+  const { data } = useGetProducts({
+    page: Number(page),
+    limit: Number(limit),
+    tipe,
+  });
+
+  const columns: Column<ProductResponse>[] = useMemo(
+    () => [
+      {
+        field: 'no',
+        headerName: 'No',
+        width: 20,
+      },
+      {
+        field: 'judul',
+        headerName: 'Judul',
+        width: 100,
+      },
+      {
+        field: 'deskripsi',
+        headerName: 'Deskripsi',
+        width: 200,
+      },
+      {
+        field: 'tipe',
+        headerName: 'Tipe',
+        width: 50,
+      },
+      {
+        field: 'foto',
+        headerName: 'Foto',
+        width: 100,
+        render: (row: ProductResponse) => {
+          return (
+            <img src={row.foto} alt="Foto" className="h-50 w-auto rounded-md object-contain" />
+          );
+        },
+      },
+      {
+        field: 'actions',
+        headerName: 'Actions',
+        width: 100,
+      },
+    ],
+    [data]
+  );
+
+  const rows: Row<ProductResponse>[] = useMemo(() => {
+    return (
+      data?.metadata.data.map((product: ProductResponse, index: number) => ({
+        ...product,
+        no: index + 1,
+        actions: [
+          {
+            actionName: 'View',
+            action: () => {
+              navigate(`/produk-layanan/${product.id}`);
+            },
+            icon: () => <FaEye className="text-blue-500" />,
+          },
+          {
+            actionName: 'Delete',
+            action: () => {},
+            icon: () => <FaTrash className="text-red-500" />,
+          },
+        ],
+      })) || []
+    );
+  }, [data]);
+
+  return {
+    pagination: {
+      page: data?.metadata.current_page,
+      total: data?.metadata.total,
+      perPage: data?.metadata.per_page,
+      total_page: data?.metadata.total_page,
+    },
+    columns,
+    rows,
+    tipe,
+    navigate,
+    params,
+  };
+};
+
+export default useController;

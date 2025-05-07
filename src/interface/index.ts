@@ -4,3 +4,6 @@ export * from './profile/request';
 export * from './profile/response';
 export * from './api/successReponse';
 export * from './api/errorResponse';
+export * from './global';
+export * from './product/request';
+export * from './product/response';

@@ -6,7 +6,13 @@ import LoginGuardWrapper from '@/components/wrapper/login-guard-wrapper';
 import AdminWrapper from '@/components/wrapper/admin-wrapper';
 import ProfileWrapper from '@/components/wrapper/profile-wrapper';
 import GeneralInformation from '@/pages/profile/general-information';
-
+import VisiMisi from '@/pages/profile/visi-misi';
+import StrukturPerusahaan from '@/pages/profile/struktur-perusahaan';
+import Banner from '@/pages/profile/banner';
+import Product from '@/pages/product';
+import AddProduct from '@/pages/add-product';
+import ProductWrapper from '@/components/wrapper/product-wrapper';
+import DetailProduct from '@/pages/detail-product';
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -36,21 +42,36 @@ const routes = createBrowserRouter([
               },
               {
                 path: 'visi-misi',
-                element: <Home />,
+                element: <VisiMisi />,
               },
               {
                 path: 'struktur-organisasi',
-                element: <Home />,
+                element: <StrukturPerusahaan />,
               },
               {
                 path: 'banner',
-                element: <Home />,
+                element: <Banner />,
               },
             ],
           },
           {
             path: 'produk-layanan',
-            element: <Home />,
+            element: <ProductWrapper />,
+            children: [
+              {
+                path: '',
+                index: true,
+                element: <Product />,
+              },
+              {
+                path: 'tambah',
+                element: <AddProduct />,
+              },
+              {
+                path: ':id',
+                element: <DetailProduct />,
+              },
+            ],
           },
           {
             path: 'publikasi',

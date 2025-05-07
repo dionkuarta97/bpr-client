@@ -22,7 +22,7 @@ const useController = () => {
         active: pathname.pathname.startsWith('/profile/visi-misi'),
       },
       {
-        label: 'Struktur Organisasi',
+        label: 'Struktur Perusahaan',
         path: '/profile/struktur-organisasi',
         active: pathname.pathname.startsWith('/profile/struktur-organisasi'),
       },

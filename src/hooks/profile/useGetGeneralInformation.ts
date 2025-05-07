@@ -1,9 +1,9 @@
-import axiosInstance from '@/axios';
+import { publicApi } from '@/axios';
 import { SuccessResponse, GeneralInformationResponse } from '@/interface';
 import { useQuery } from '@tanstack/react-query';
 
 const getGeneralInformation = async (): Promise<SuccessResponse<GeneralInformationResponse>> => {
-  const response = await axiosInstance.get('/public/profile/general-information');
+  const response = await publicApi.get('/profile/general-information');
   return response.data;
 };
 

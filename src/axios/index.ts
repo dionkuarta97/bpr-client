@@ -1,5 +1,5 @@
-import { ErrorResponse } from '@/interface';
-import axios, { AxiosError } from 'axios';
+import { ErrorResponse, SuccessPaginationResponse, SuccessResponse } from '@/interface';
+import axios, { AxiosError, RawAxiosRequestHeaders } from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
@@ -46,3 +46,27 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(newError);
   }
 );
+
+export const admin = {
+  header: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')?.replace('"', '')}`,
+  } as RawAxiosRequestHeaders,
+  get: (url: string) => axiosInstance.get(`/admin${url}`, { headers: admin.header }),
+  post: <T>(url: string, data?: any, headers?: RawAxiosRequestHeaders) =>
+    axiosInstance.post<SuccessResponse<T>>(`/admin${url}`, data, {
+      headers: { ...admin.header, ...headers },
+    }),
+  put: <T>(url: string, data?: any) =>
+    axiosInstance.put<SuccessResponse<T>>(`/admin${url}`, data, { headers: admin.header }),
+  delete: <T>(url: string) =>
+    axiosInstance.delete<SuccessResponse<T>>(`/admin${url}`, { headers: admin.header }),
+};
+
+export const publicApi = {
+  get: (url: string) => axiosInstance.get(`/public${url}`),
+  getPagination: <T, R>(url: string, params?: T) =>
+    axiosInstance.get<SuccessPaginationResponse<R>>(`/public${url}`, { params }),
+  post: (url: string, data?: any) => axiosInstance.post(`/public${url}`, data),
+};

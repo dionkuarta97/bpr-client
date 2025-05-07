@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import axiosInstance from '@/axios';
+import { publicApi } from '@/axios';
 import { LoginRequest, LoginResponse, SuccessResponse } from '@/interface';
 
-const postLogin = async (data: LoginRequest) => {
-  const response = await axiosInstance.post<SuccessResponse<LoginResponse>>('/public/login', data);
+const postLogin = async (data: LoginRequest): Promise<SuccessResponse<LoginResponse>> => {
+  const response = await publicApi.post('/login', data);
   return response.data;
 };
 

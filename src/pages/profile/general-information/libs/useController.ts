@@ -1,9 +1,39 @@
 import useGetGeneralInformation from '@/hooks/profile/useGetGeneralInformation';
-
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { GeneralInformationRequest } from '@/interface';
+import useMutationGeneralInfo from '@/hooks/profile/useMutationGeneralInfo';
 const useController = () => {
   const { data, isLoading, error } = useGetGeneralInformation();
+  const [isEdit, setIsEdit] = useState(false);
+  const { updateGeneralInfo } = useMutationGeneralInfo();
+  const [form, setForm] = useState<GeneralInformationRequest>(
+    data?.data as GeneralInformationRequest
+  );
 
-  return { data: data?.data, isLoading, error };
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target.name);
+      setForm({ ...form, [e.target.name]: e.target.value });
+    },
+    [form]
+  );
+  const handleEdit = useCallback(() => {
+    setIsEdit(true);
+  }, [isEdit]);
+
+  const handleSave = useCallback(() => {
+    if (form === data?.data) {
+      setIsEdit(false);
+      return;
+    }
+    updateGeneralInfo(form);
+    setIsEdit(false);
+  }, [form, data?.data]);
+
+  useEffect(() => {
+    setForm(data?.data as GeneralInformationRequest);
+  }, [data, isEdit]);
+  return { isLoading, error, isEdit, handleEdit, handleChange, form, handleSave };
 };
 
 export default useController;
