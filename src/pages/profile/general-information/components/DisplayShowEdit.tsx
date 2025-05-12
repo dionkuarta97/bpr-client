@@ -1,13 +1,18 @@
+import TextAreaDefault from '@/components/input/text-area-default/TextAreaDefault';
 import Text from '@/components/text';
 import { TextField } from '@mui/material';
 import { ChangeEvent } from 'react';
 interface DisplayShowEditProps {
   label: string;
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+    name?: string
+  ) => void;
   isEdit: boolean;
   name: string;
   placeholder?: string;
+  longText?: boolean;
 }
 const DisplayShowEdit = ({
   label,
@@ -16,6 +21,7 @@ const DisplayShowEdit = ({
   isEdit,
   placeholder,
   name,
+  longText,
 }: DisplayShowEditProps) => {
   return (
     <div
@@ -28,14 +34,26 @@ const DisplayShowEdit = ({
       </div>
       <div className="w-5/8">
         {isEdit ? (
-          <TextField
-            name={name}
-            value={value}
-            className="text-text-gray w-full text-xl"
-            variant="outlined"
-            onChange={onChange}
-            placeholder={placeholder}
-          />
+          <>
+            {longText ? (
+              <TextAreaDefault
+                name={name}
+                value={value}
+                onChange={e => onChange(e, name)}
+                placeholder={placeholder || ''}
+                minRows={10}
+              />
+            ) : (
+              <TextField
+                name={name}
+                value={value}
+                className="text-text-gray w-full text-xl"
+                variant="outlined"
+                onChange={onChange}
+                placeholder={placeholder}
+              />
+            )}
+          </>
         ) : (
           <Text
             label={value || placeholder || ''}

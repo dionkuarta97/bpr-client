@@ -6,10 +6,10 @@ import UploadImage from '@/components/input/upload-image';
 import { ProductType } from '@/enum';
 import useController from '../libs/useController';
 const Content = () => {
-  const { form, handleChange, setImage, disabled, image, handleSubmit } = useController();
+  const { form, handleChange, setImage, disabled, handleSubmit, id, imageUrl } = useController();
   return (
     <div className="flex flex-col gap-4">
-      <Text label="Tambah Produk" variant="h1" />
+      <Text label={id ? 'Edit Produk' : 'Tambah Produk'} variant="h1" />
       <div className="flex flex-row border-b border-gray-200 py-8 mt-8 gap-4">
         <div className="flex w-1/4 flex-col gap-2">
           <Text label="Nama Produk (wajib)" variant="h5" />
@@ -54,10 +54,7 @@ const Content = () => {
           <Text label="Foto (wajib)" variant="h5" />
         </div>
         <div className="flex w-3/4 flex-col gap-2">
-          <UploadImage
-            onChange={value => setImage(value)}
-            value={image ? URL.createObjectURL(image) : ''}
-          />
+          <UploadImage onChange={value => setImage(value)} value={imageUrl as string} />
         </div>
       </div>
       <div className="flex flex-row border-b border-gray-200 py-8  gap-4">

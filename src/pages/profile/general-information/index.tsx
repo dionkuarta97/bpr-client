@@ -57,6 +57,31 @@ const GeneralInformation = () => {
         isEdit={isEdit}
         placeholder="Masukkan email"
       />
+      <DisplayShowEdit
+        label="Sejarah"
+        name="sejarah"
+        longText={true}
+        value={form?.sejarah as string}
+        onChange={handleChange}
+        isEdit={isEdit}
+        placeholder="Masukkan sejarah"
+      />
+      <DisplayShowEdit
+        label="Link Facebook"
+        name="link_fb"
+        value={form?.link_fb as string}
+        onChange={handleChange}
+        isEdit={isEdit}
+        placeholder="Masukkan link facebook"
+      />
+      <DisplayShowEdit
+        label="Link Instagram"
+        name="link_ig"
+        value={form?.link_ig as string}
+        onChange={handleChange}
+        isEdit={isEdit}
+        placeholder="Masukkan link instagram"
+      />
     </div>
   );
 };

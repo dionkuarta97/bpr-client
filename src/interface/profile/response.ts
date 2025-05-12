@@ -5,6 +5,9 @@ export interface GeneralInformationResponse {
   no_hp: string | null;
   email: string | null;
   visi: string | null;
+  sejarah: string | null;
+  link_fb: string | null;
+  link_ig: string | null;
   created_at: string | null;
   updated_at: string | null;
 }

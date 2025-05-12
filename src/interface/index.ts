@@ -7,3 +7,5 @@ export * from './api/errorResponse';
 export * from './global';
 export * from './product/request';
 export * from './product/response';
+export * from './publikasi/request';
+export * from './publikasi/response';

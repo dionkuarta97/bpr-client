@@ -11,9 +11,12 @@ const useController = () => {
   );
 
   const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      console.log(e.target.name);
-      setForm({ ...form, [e.target.name]: e.target.value });
+    (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>, name?: string) => {
+      if (name) {
+        setForm({ ...form, [name]: e.target.value });
+      } else {
+        setForm({ ...form, [e.target.name]: e.target.value });
+      }
     },
     [form]
   );

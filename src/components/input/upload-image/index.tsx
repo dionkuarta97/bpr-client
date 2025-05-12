@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaTrash, FaUpload } from 'react-icons/fa';
 
 interface UploadImageProps {
@@ -9,6 +9,13 @@ interface UploadImageProps {
 
 const UploadImage = ({ onChange, value }: UploadImageProps) => {
   const [image, setImage] = useState<string | null>(value || null);
+
+  useEffect(() => {
+    if (value) {
+      setImage(value);
+    }
+  }, [value]);
+
   return (
     <div className="flex border-2 bg-[#ECEFF1] border-gray-300 rounded-[15px] items-center justify-center h-60">
       {image ? (

@@ -3,6 +3,9 @@ export interface GeneralInformationRequest {
   alamat: string | null;
   no_hp: string | null;
   email: string | null;
+  sejarah: string | null;
+  link_fb: string | null;
+  link_ig: string | null;
 }
 
 export interface UpdateVisiRequest {

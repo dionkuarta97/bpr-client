@@ -5,8 +5,19 @@ import { Select, MenuItem } from '@mui/material';
 import { ProductType } from '@/enum';
 import Text from '@/components/text';
 import { FaPlus } from 'react-icons/fa';
+import ModalDefault from '@/components/modal';
 const Content = () => {
-  const { columns, rows, pagination, tipe, navigate, params } = useController();
+  const {
+    columns,
+    rows,
+    pagination,
+    tipe,
+    navigate,
+    open,
+    handleClose,
+    handleDelete,
+    handleParamsChange,
+  } = useController();
 
   return (
     <div>
@@ -17,19 +28,7 @@ const Content = () => {
             size="small"
             value={tipe.length > 0 ? tipe : 'semua'}
             onChange={event => {
-              if (event.target.value === 'semua') {
-                if (params.get('page')) {
-                  navigate(`?page=${params.get('page')}`);
-                } else {
-                  navigate(``);
-                }
-              } else {
-                if (params.get('page')) {
-                  navigate(`?tipe=${event.target.value}&page=${params.get('page')}`);
-                } else {
-                  navigate(`?tipe=${event.target.value}`);
-                }
-              }
+              handleParamsChange('tipe', event.target.value);
             }}
           >
             <MenuItem value="semua">Semua</MenuItem>
@@ -60,6 +59,22 @@ const Content = () => {
           total_page: pagination?.total_page ?? 0,
         }}
       />
+      <ModalDefault
+        open={open}
+        onClose={handleClose}
+        onConfirm={handleDelete}
+        fotterCancel="Batal"
+        fotterConfirm="Hapus"
+        title="Hapus Produk"
+      >
+        <div className="flex items-center justify-center p-8">
+          <Text
+            label="Apakah anda yakin ingin menghapus produk ini?"
+            className="text-center"
+            variant="h2"
+          />
+        </div>
+      </ModalDefault>
     </div>
   );
 };

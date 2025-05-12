@@ -1,15 +1,20 @@
 import useGetProducts from '@/hooks/product/useGetProducts';
 import { Column, Row } from '@/interface/global';
 import { ProductResponse } from '@/interface/product/response';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { FaEye, FaTrash } from 'react-icons/fa';
+import { FaEye, FaTrash, FaEdit } from 'react-icons/fa';
+import useMutationDeleteProduct from '@/hooks/product/useMutationDeleteProduct';
+import useOpenClose from '@/hooks/useOpenClose';
 const useController = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const page = params.get('page') || 1;
   const limit = params.get('limit') || 10;
   const tipe = params.get('tipe') || '';
+  const { open, handleOpen, handleClose } = useOpenClose();
+  const [id, setId] = useState<string>('');
+  const { deleteProduct } = useMutationDeleteProduct();
   const { data } = useGetProducts({
     page: Number(page),
     limit: Number(limit),
@@ -41,7 +46,7 @@ const useController = () => {
       {
         field: 'foto',
         headerName: 'Foto',
-        width: 100,
+        width: 150,
         render: (row: ProductResponse) => {
           return (
             <img src={row.foto} alt="Foto" className="h-50 w-auto rounded-md object-contain" />
@@ -51,7 +56,7 @@ const useController = () => {
       {
         field: 'actions',
         headerName: 'Actions',
-        width: 100,
+        width: 50,
       },
     ],
     [data]
@@ -72,13 +77,42 @@ const useController = () => {
           },
           {
             actionName: 'Delete',
-            action: () => {},
+            action: () => {
+              setId(product.id.toString());
+              handleOpen();
+            },
             icon: () => <FaTrash className="text-red-500" />,
+          },
+          {
+            actionName: 'Edit',
+            action: () => {
+              navigate(`/produk-layanan/edit/${product.id}`);
+            },
+            icon: () => <FaEdit className="text-green-500" />,
           },
         ],
       })) || []
     );
   }, [data]);
+
+  const handleDelete = () => {
+    deleteProduct(id);
+    setId('');
+    handleClose();
+  };
+
+  const handleParamsChange = (paramName: string, paramValue: string) => {
+    const newParams: Record<string, string> = {};
+
+    if (tipe && paramName !== 'tipe') newParams.tipe = tipe;
+
+    if (paramValue !== 'semua') {
+      newParams[paramName] = paramValue;
+    }
+
+    const queryString = new URLSearchParams(newParams).toString();
+    navigate(queryString ? `?${queryString}` : '');
+  };
 
   return {
     pagination: {
@@ -92,6 +126,11 @@ const useController = () => {
     tipe,
     navigate,
     params,
+    open,
+    handleOpen,
+    handleClose,
+    handleDelete,
+    handleParamsChange,
   };
 };
 

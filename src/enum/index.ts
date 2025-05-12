@@ -3,3 +3,9 @@ export enum ProductType {
   KREDIT = 'KREDIT',
   TABUNGAN = 'TABUNGAN',
 }
+
+export enum TipePublikasi {
+  LAPORAN = 'LAPORAN',
+  BERITA = 'BERITA',
+  PENGUMUMAN = 'PENGUMUMAN',
+}

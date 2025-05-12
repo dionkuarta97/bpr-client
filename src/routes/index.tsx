@@ -1,4 +1,3 @@
-import Home from '@/pages/home';
 import AuthGuardWrapper from '@/components/wrapper/auth-guard-wrapper';
 import Login from '@/pages/login';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -9,10 +8,14 @@ import GeneralInformation from '@/pages/profile/general-information';
 import VisiMisi from '@/pages/profile/visi-misi';
 import StrukturPerusahaan from '@/pages/profile/struktur-perusahaan';
 import Banner from '@/pages/profile/banner';
-import Product from '@/pages/product';
-import AddProduct from '@/pages/add-product';
+import Product from '@/pages/product/product';
+import AddProduct from '@/pages/product/add-product';
 import ProductWrapper from '@/components/wrapper/product-wrapper';
-import DetailProduct from '@/pages/detail-product';
+import DetailProduct from '@/pages/product/detail-product';
+import Publikasi from '@/pages/publikasi/publikasi';
+import PublikasiWrapper from '@/components/wrapper/publikasi-wrapper';
+import AddPublikasi from '@/pages/publikasi/add-publikasi';
+import DetailPublikasi from '@/pages/publikasi/detail-publikasi';
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -71,15 +74,34 @@ const routes = createBrowserRouter([
                 path: ':id',
                 element: <DetailProduct />,
               },
+              {
+                path: 'edit/:id',
+                element: <AddProduct />,
+              },
             ],
           },
           {
             path: 'publikasi',
-            element: <Home />,
-          },
-          {
-            path: 'gallery',
-            element: <Home />,
+            element: <PublikasiWrapper />,
+            children: [
+              {
+                path: '',
+                index: true,
+                element: <Publikasi />,
+              },
+              {
+                path: 'tambah',
+                element: <AddPublikasi />,
+              },
+              {
+                path: ':id',
+                element: <DetailPublikasi />,
+              },
+              {
+                path: 'edit/:id',
+                element: <AddPublikasi />,
+              },
+            ],
           },
         ],
       },
