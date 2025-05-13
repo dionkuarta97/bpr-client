@@ -59,6 +59,7 @@ const Content = () => {
         open={openModalDeleteStruktur}
         onClose={handleCloseModalDeleteStruktur}
         onConfirm={handleDeleteStruktur}
+        onCancel={handleCloseModalDeleteStruktur}
         fotterCancel="Batal"
         fotterConfirm="Hapus"
         title="Hapus Struktur"

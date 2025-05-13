@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaUser, FaBook, FaNewspaper } from 'react-icons/fa';
 
@@ -59,6 +59,10 @@ const useController = () => {
   const handleMenuClick = (path: string) => {
     navigate(path);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return { menu, handleMenuClick, activeMenu };
 };

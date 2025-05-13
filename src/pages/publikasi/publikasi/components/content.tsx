@@ -94,6 +94,7 @@ const Content = () => {
         open={open}
         onClose={handleClose}
         onConfirm={handleDelete}
+        onCancel={handleClose}
         fotterCancel="Batal"
         fotterConfirm="Hapus"
         title="Hapus Publikasi"

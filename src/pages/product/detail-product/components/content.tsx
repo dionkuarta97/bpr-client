@@ -20,7 +20,12 @@ const Content = () => {
       </div>
       <div className="flex flex-col mt-20 gap-4">
         <Text label="Deskripsi" variant="h2" />
-        <ReactQuill value={data?.data.content} readOnly={true} theme={'bubble'} />
+        <ReactQuill
+          className="custom-editor"
+          value={data?.data.content}
+          readOnly={true}
+          theme={'bubble'}
+        />
       </div>
     </div>
   );

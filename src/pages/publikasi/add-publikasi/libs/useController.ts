@@ -101,11 +101,22 @@ const useController = () => {
     }
   };
 
+  const contentHtml = useMemo(() => {
+    if (data?.data.content) {
+      let content = data.data.content;
+      if (!/^<.*?>/.test(content.trim())) {
+        content = `<p>${content}</p>`;
+      }
+      return content;
+    }
+    return '<p></p>';
+  }, [data?.data.content]);
+
   useEffect(() => {
     if (data) {
       setForm({
         judul: data.data.judul,
-        content: data.data.content || '',
+        content: contentHtml,
         deskripsi: data.data.deskripsi,
         tipe: data.data.tipe,
         tahun: data.data.tahun || '',
@@ -113,7 +124,7 @@ const useController = () => {
       setImageUrl(data.data.foto);
       setPdfUrl(data.data.pdfPath);
     }
-  }, [data]);
+  }, [data, contentHtml]);
 
   useEffect(() => {
     if (form.tipe !== TipePublikasi.LAPORAN) {

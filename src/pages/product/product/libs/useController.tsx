@@ -66,7 +66,7 @@ const useController = () => {
     return (
       data?.metadata.data.map((product: ProductResponse, index: number) => ({
         ...product,
-        no: index + 1,
+        no: index + 1 + (data?.metadata.current_page - 1) * data?.metadata.per_page,
         actions: [
           {
             actionName: 'View',

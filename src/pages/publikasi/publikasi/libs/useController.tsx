@@ -79,7 +79,7 @@ const useController = () => {
     return (
       data?.metadata.data.map((publikasi: PublikasiResponse, index: number) => ({
         ...publikasi,
-        no: index + 1,
+        no: index + 1 + (data?.metadata.current_page - 1) * data?.metadata.per_page,
         actions: [
           {
             actionName: 'View',

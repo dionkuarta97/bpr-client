@@ -19,14 +19,11 @@ const useController = () => {
     deskripsi: '',
     tipe: '',
   });
-  console.log(data);
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const handleChange = (value: string, key: string) => {
     setForm({ ...form, [key]: value });
   };
-
-  console.log(id);
 
   const disabled = useMemo(() => {
     if (!id) {
@@ -78,12 +75,32 @@ const useController = () => {
     }
   };
 
+  const contentHtml = useMemo(() => {
+    if (data?.data.content) {
+      let content = data.data.content;
+      if (!/^<.*?>/.test(content.trim())) {
+        content = `<p>${content}</p>`;
+      }
+      return content;
+    }
+    return '<p></p>';
+  }, [data?.data.content]);
+
   useEffect(() => {
     if (data) {
-      setForm(data.data);
+      setForm({
+        judul: data.data.judul,
+        content: contentHtml,
+        deskripsi: data.data.deskripsi,
+        tipe: data.data.tipe,
+      });
       setImageUrl(data.data.foto);
     }
-  }, [data]);
+  }, [data?.data, contentHtml]);
+
+  useEffect(() => {
+    console.log('FORM TERUPDATE:', form);
+  }, [form]);
 
   return { form, setForm, handleChange, image, setImage, disabled, handleSubmit, id, imageUrl };
 };

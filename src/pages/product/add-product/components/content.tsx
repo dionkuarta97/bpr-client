@@ -6,7 +6,8 @@ import UploadImage from '@/components/input/upload-image';
 import { ProductType } from '@/enum';
 import useController from '../libs/useController';
 const Content = () => {
-  const { form, handleChange, setImage, disabled, handleSubmit, id, imageUrl } = useController();
+  const { form, handleChange, setImage, disabled, handleSubmit, id, imageUrl, setForm } =
+    useController();
   return (
     <div className="flex flex-col gap-4">
       <Text label={id ? 'Edit Produk' : 'Tambah Produk'} variant="h1" />
@@ -17,7 +18,7 @@ const Content = () => {
         <div className="flex w-3/4 flex-col gap-2">
           <TextField
             value={form.judul}
-            onChange={e => handleChange(e.target.value, 'judul')}
+            onChange={e => setForm({ ...form, judul: e.target.value })}
             size="small"
             placeholder="Masukkan nama produk"
             fullWidth
